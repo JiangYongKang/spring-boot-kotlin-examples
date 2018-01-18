@@ -6,7 +6,7 @@
     <groupId>com.person.vincent</groupId>
     <artifactId>spring-boot-with-kotlin-examples</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>spring-boot-with-kotlin-examples</name>
     <description>spring boot with kotlin examples</description>
@@ -15,11 +15,12 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.9.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
 
     <modules>
         <module>quick-start</module>
+        <module>spring-data-jpa-crud</module>
     </modules>
 
     <properties>
@@ -27,7 +28,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <kotlin.version>1.2.10</kotlin.version>
+        <kotlin.version>1.2.20</kotlin.version>
     </properties>
 
     <dependencies>
@@ -37,7 +38,7 @@
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jre8</artifactId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
         <dependency>
