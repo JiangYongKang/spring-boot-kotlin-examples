@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 class QuickStartApplication {
 
     @GetMapping("/say")
-    fun say(): String {
-        return "Hello World!!!"
-    }
+    fun say(): String = "Hello World!!!"
 }
 
 fun main(args: Array<String>) {

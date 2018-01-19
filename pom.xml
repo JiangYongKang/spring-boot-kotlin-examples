@@ -21,6 +21,7 @@
     <modules>
         <module>quick-start</module>
         <module>spring-data-jpa-crud</module>
+        <module>spring-security</module>
     </modules>
 
     <properties>
