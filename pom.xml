@@ -22,6 +22,7 @@
         <module>quick-start</module>
         <module>spring-data-jpa-crud</module>
         <module>spring-security</module>
+        <module>spring-boot-with-undertow</module>
     </modules>
 
     <properties>
