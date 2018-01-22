@@ -10,7 +10,6 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}")
         classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlin_version}")
         classpath("org.jetbrains.kotlin:kotlin-noarg:${kotlin_version}")
-
     }
 }
 
@@ -28,6 +27,9 @@ subprojects {
     dependencies {
         compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}")
         compile("org.jetbrains.kotlin:kotlin-reflect:${kotlin_version}")
+
+        compile('org.slf4j:slf4j-api:1.7.25')
+        compile('org.slf4j:slf4j-simple:1.7.25')
     }
 
     compileKotlin {
