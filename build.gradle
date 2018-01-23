@@ -1,12 +1,11 @@
 buildscript {
-    ext.kotlin_version = '1.2.20'
+    ext.kotlin_version = "1.2.20"
     ext.springframework_version = "5.0.2.RELEASE"
 
     repositories {
         maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
     }
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}")
         classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlin_version}")
         classpath("org.jetbrains.kotlin:kotlin-noarg:${kotlin_version}")
@@ -28,7 +27,6 @@ subprojects {
         compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}")
         compile("org.jetbrains.kotlin:kotlin-reflect:${kotlin_version}")
 
-        compile('org.slf4j:slf4j-api:1.7.25')
         compile('org.slf4j:slf4j-simple:1.7.25')
     }
 

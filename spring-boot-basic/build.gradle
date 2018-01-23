@@ -1,0 +1,32 @@
+buildscript {
+    ext.springboot_version = "2.0.0.BUILD-SNAPSHOT"
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springboot_version}")
+    }
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+repositories {
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
+}
+
+// spring boot starter logging 传递依赖冲突，移除继承自父项目的依赖
+configurations {
+    compile.exclude group: 'org.slf4j', module: 'slf4j-simple'
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.0")
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
