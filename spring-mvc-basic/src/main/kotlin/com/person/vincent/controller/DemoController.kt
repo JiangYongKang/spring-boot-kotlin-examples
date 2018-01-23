@@ -24,8 +24,8 @@ class DemoController {
     fun index(request: HttpServletRequest) = "url: " + request.requestURL + " can access"
 
     @ResponseBody
-    @RequestMapping(value = ["/path/var/{str}"], produces = ["text/plain;charset=UTF-8"])
-    fun demoPathVar(@PathVariable s: String, request: HttpServletRequest) = "url: " + request.requestURL + " can access str: " + s
+    @RequestMapping(value = ["/path/var/{s}"], produces = ["text/plain;charset=UTF-8"])
+    fun demoPathVar(@PathVariable s: String, request: HttpServletRequest) = "url: " + request.requestURL + " can access s: " + s
 
     @ResponseBody
     @RequestMapping(value = ["/requestParam"], produces = ["text/plain;charset=UTF-8"])

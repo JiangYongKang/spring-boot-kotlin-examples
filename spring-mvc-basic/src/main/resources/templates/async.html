@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>async</title>
+
+</head>
+<body>
+
+</body>
+<script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+<script type="text/javascript">
+    deferred();
+    function deferred() {
+        $.get('defer', function (data) {
+            console.log(data);
+            deferred();
+        });
+    }
+</script>
+</html>

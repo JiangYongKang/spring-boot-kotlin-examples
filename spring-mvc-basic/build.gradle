@@ -7,5 +7,10 @@ dependencies {
     compile("org.springframework:spring-webmvc:${springframework_version}")
     compile("org.springframework:spring-tx:${springframework_version}")
     compile("org.thymeleaf:thymeleaf-spring4:${thymeleaf_version}")
-    compileOnly("javax.servlet:javax.servlet-api:${servlet_version}")
+
+    // 如果不写单元测试，调用 compileOnly 方法，仅在编译期间使用
+    compile("javax.servlet:javax.servlet-api:${servlet_version}")
+
+    testCompile("org.springframework:spring-test:${springframework_version}")
+    testCompile('junit:junit:4.12')
 }
