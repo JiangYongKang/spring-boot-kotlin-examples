@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>index</title>
+</head>
+<body>
+    <!--/*@thymesVar id="singlePerson" type="com.person.vincent.model.Person"*/-->
+    <p>person name: <span th:text="${singlePerson.name}"></span>, age: <span th:text="${singlePerson.age}"></span></p>
+    
+    
+    <!--/*@thymesVar id="person" type="com.person.vincent.model.Person"*/-->
+    <div th:each="person: ${people}">
+        <p>person name: <span th:text="${person.name}"></span>, age: <span th:text="${person.name}"></span></p>
+    </div>
+</body>
+</html>
