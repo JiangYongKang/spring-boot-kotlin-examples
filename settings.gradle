@@ -2,4 +2,5 @@ rootProject.name = 'spring-boot-with-kotlin-examples'
 include 'spring-framework-basic'
 include 'spring-mvc-basic'
 include 'spring-boot-basic'
+include 'spring-boot-banner'
 
