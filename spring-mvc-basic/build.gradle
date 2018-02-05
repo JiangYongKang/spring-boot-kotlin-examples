@@ -7,6 +7,7 @@ dependencies {
     compile("org.springframework:spring-webmvc:${springframework_version}")
     compile("org.springframework:spring-tx:${springframework_version}")
     compile("org.thymeleaf:thymeleaf-spring4:${thymeleaf_version}")
+    compile('org.slf4j:slf4j-simple:1.7.25')
 
     // 如果不写单元测试，调用 compileOnly 方法，仅在编译期间使用
     compile("javax.servlet:javax.servlet-api:${servlet_version}")

@@ -1,5 +1,6 @@
 dependencies {
     compile("org.springframework:spring-context:${springframework_version}")
+    compile('org.slf4j:slf4j-simple:1.7.25')
 
     testCompile("org.springframework:spring-test:${springframework_version}")
     testCompile('junit:junit:4.12')
