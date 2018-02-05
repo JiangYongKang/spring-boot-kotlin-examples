@@ -3,4 +3,5 @@ include 'spring-framework-basic'
 include 'spring-mvc-basic'
 include 'spring-boot-basic'
 include 'spring-boot-banner'
+include 'spring-boot-event-listener'
 
