@@ -1,38 +1,10 @@
-buildscript {
-    ext.springboot_version = "2.0.0.BUILD-SNAPSHOT"
-    repositories {
-        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-        maven { url "https://repo.spring.io/snapshot" }
-        maven { url "https://repo.spring.io/milestone" }
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springboot_version}")
-    }
-}
-
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-
-repositories {
-    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-    maven { url "https://repo.spring.io/snapshot" }
-    maven { url "https://repo.spring.io/milestone" }
-}
-
-// spring boot starter logging 传递依赖冲突，移除继承自父项目的依赖
 configurations {
-    compile.exclude group: 'org.slf4j', module: 'slf4j-simple'
+    compile.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web") {
-        exclude(group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat')
-    }
     compile("org.springframework.boot:spring-boot-starter-undertow") {
         exclude group: 'io.undertow', module: 'undertow-websockets-jsr'
     }
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-    compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.0")
-
-    testCompile("org.springframework.boot:spring-boot-starter-test")
 }
