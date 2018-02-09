@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /spring-boot-configuring
+  tomcat:
+    uri-encoding: utf-8
+
+spring:
+  thymeleaf:
+    cache: true
+    mode: HTML
+    prefix: classpath:/templates/
+    suffix: .html
+    enabled: true
+
+

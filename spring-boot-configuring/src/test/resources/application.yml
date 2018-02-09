@@ -1,0 +1,18 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /spring-boot-configuring
+
+spring:
+  thymeleaf:
+    cache: true
+    mode: HTML
+    prefix: classpath:/templates/
+    suffix: .html
+    enabled: true
+
+random:
+  int: ${random.int}
+  less: ${random.int(10)}
+  uuid: ${random.uuid}
+  secret: ${random.value}
