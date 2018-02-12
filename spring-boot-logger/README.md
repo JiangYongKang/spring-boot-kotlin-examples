@@ -81,20 +81,6 @@ logging.file.max-history=10
     <logger name="java.sql.Connection" level="DEBUG"/>
     <logger name="java.sql.Statement" level="DEBUG"/>
     <logger name="java.sql.PreparedStatement" level="DEBUG"/>
-
-    <!--日志异步到数据库-->
-    <!--
-        <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
-            <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
-                <dataSource class="com.mchange.v2.c3p0.ComboPooledDataSource">
-                    <driverClass>com.mysql.jdbc.Driver</driverClass>
-                    <url>jdbc:mysql://127.0.0.1:3306/databaseName</url>
-                    <user>root</user>
-                    <password>root</password>
-                </dataSource>
-            </connectionSource>
-        </appender>
-    -->
 </configuration>
 ```
 这时候，启动你的应用。可以从控制台上看到以下信息。同时，项目根目录下会产生一个 `log` 文件夹，里面保存了日志文件。
@@ -114,3 +100,92 @@ logging.file.max-history=10
 2018-02-12 14:27:17.745 LogBack [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
 2018-02-12 14:27:17.745 LogBack [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet Engine: Apache Tomcat/8.5.27
 ```
+### 保存日志到数据库
+首先需要在数据库中添加三张表，`logging_event` `logging_event_property` `logging_event_exception`，表结构如下：
+```sql
+BEGIN;
+DROP TABLE IF EXISTS logging_event_property;
+DROP TABLE IF EXISTS logging_event_exception;
+DROP TABLE IF EXISTS logging_event;
+COMMIT;
+
+BEGIN;
+CREATE TABLE logging_event
+  (
+    timestmp         BIGINT NOT NULL,
+    formatted_message  TEXT NOT NULL,
+    logger_name       VARCHAR(254) NOT NULL,
+    level_string      VARCHAR(254) NOT NULL,
+    thread_name       VARCHAR(254),
+    reference_flag    SMALLINT,
+    arg0              VARCHAR(254),
+    arg1              VARCHAR(254),
+    arg2              VARCHAR(254),
+    arg3              VARCHAR(254),
+    caller_filename   VARCHAR(254) NOT NULL,
+    caller_class      VARCHAR(254) NOT NULL,
+    caller_method     VARCHAR(254) NOT NULL,
+    caller_line       CHAR(4) NOT NULL,
+    event_id          BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY
+  );
+COMMIT;
+
+
+BEGIN;
+CREATE TABLE logging_event_property
+  (
+    event_id       BIGINT NOT NULL,
+    mapped_key        VARCHAR(254) NOT NULL,
+    mapped_value      TEXT,
+    PRIMARY KEY(event_id, mapped_key),
+    FOREIGN KEY (event_id) REFERENCES logging_event(event_id)
+  );
+COMMIT;
+
+
+BEGIN;
+CREATE TABLE logging_event_exception
+  (
+    event_id         BIGINT NOT NULL,
+    i                SMALLINT NOT NULL,
+    trace_line       VARCHAR(254) NOT NULL,
+    PRIMARY KEY(event_id, i),
+    FOREIGN KEY (event_id) REFERENCES logging_event(event_id)
+  );
+COMMIT;
+```
+在 `application.properties` 中添加数据库驱动信息
+```properties
+spring.datasource.url=jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false
+spring.datasource.data-username=root
+spring.datasource.password=root
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+```
+在 `logback-spring.xml` 中添加一些属性标签，引用上面的配置：
+```xml
+<springProperty scope="context" name="DRIVER_CLASS" source="spring.datasource.driver-class-name"
+                defaultValue="com.mysql.cj.jdbc.Driver"/>
+<springProperty scope="context" name="URL" source="spring.datasource.url"
+                defaultValue="jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false"/>
+<springProperty scope="context" name="USER" source="spring.datasource.data-username" defaultValue="root"/>
+<springProperty scope="context" name="PASSWORD" source="spring.datasource.password" defaultValue="root"/>
+```
+`springProperty` 标签可以引用 `spring` 环境中的属性变量。比如需要在 `logback-spring.xml` 中引用 `application.properties` 中的变量。它的使用方式与 `property` 标签很类似。但是它不是直接指定 `value`，而是指定 `source`。`defaultValue` 属性用于在 `application.properties` 找不到值的情况下的默认值。
+添加数据库连接池的配置并且将 `DB-CLASSIC-MYSQL-POOL` 添加到 `root` 元素中：
+```xml
+<appender name="DB-CLASSIC-MYSQL-POOL" class="ch.qos.logback.classic.db.DBAppender">
+    <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+        <driverClass>${DRIVER_CLASS}</driverClass>
+        <url>${URL}</url>
+        <user>${USER}</user>
+        <password>${PASSWORD}</password>
+    </connectionSource>
+</appender>
+
+<root level="INFO">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
+    <appender-ref ref="DB-CLASSIC-MYSQL-POOL"/>
+</root>
+```
+然后重启你的应用，这时候日志会被分别输出到 `控制台`、`日志文件`、`数据库` 三个地方、

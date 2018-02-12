@@ -2,7 +2,21 @@
 <!-- %d 表示日期 %thread 表示线程名  %-5level 级别从左显示5个字符宽度 %msg 日志消息 %n 是换行符 -->
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
     <contextName>LogBack</contextName>
+
+    <!--属性定义，方便下面引用-->
     <property name="LOG_HOME" value="/Users/vincent/developer/spring-boot-with-kotlin-examples/spring-boot-logger/log"/>
+
+    <!--
+        springProperty 标签可以引用 spring 环境中的属性变量。
+        比如需要在 logback-spring.xml 中引用 application.properties 中的变量。
+        它的使用方式与 property 标签很类似。但是它不是直接指定 value，而是指定 source。
+     -->
+    <springProperty scope="context" name="DRIVER_CLASS" source="spring.datasource.driver-class-name"
+                    defaultValue="com.mysql.cj.jdbc.Driver"/>
+    <springProperty scope="context" name="URL" source="spring.datasource.url"
+                    defaultValue="jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false"/>
+    <springProperty scope="context" name="USER" source="spring.datasource.data-username" defaultValue="root"/>
+    <springProperty scope="context" name="PASSWORD" source="spring.datasource.password" defaultValue="root"/>
 
     <!--输出到控制台-->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -32,10 +46,21 @@
         </triggeringPolicy>
     </appender>
 
+    <!--输出到数据库-->
+    <appender name="DB-CLASSIC-MYSQL-POOL" class="ch.qos.logback.classic.db.DBAppender">
+        <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+            <driverClass>${DRIVER_CLASS}</driverClass>
+            <url>${URL}</url>
+            <user>${USER}</user>
+            <password>${PASSWORD}</password>
+        </connectionSource>
+    </appender>
+
     <!--日志输出级别-->
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
+        <appender-ref ref="DB-CLASSIC-MYSQL-POOL"/>
     </root>
 
     <!-- logback为java中的包 -->
@@ -53,18 +78,4 @@
     <logger name="java.sql.Connection" level="DEBUG"/>
     <logger name="java.sql.Statement" level="DEBUG"/>
     <logger name="java.sql.PreparedStatement" level="DEBUG"/>
-
-    <!--日志异步到数据库-->
-    <!--
-        <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
-            <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
-                <dataSource class="com.mchange.v2.c3p0.ComboPooledDataSource">
-                    <driverClass>com.mysql.jdbc.Driver</driverClass>
-                    <url>jdbc:mysql://127.0.0.1:3306/databaseName</url>
-                    <user>root</user>
-                    <password>root</password>
-                </dataSource>
-            </connectionSource>
-        </appender>
-    -->
 </configuration>
