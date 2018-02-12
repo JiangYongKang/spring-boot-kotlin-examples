@@ -5,3 +5,5 @@ build
 out
 gradle
 .DS_Store
+*.log
+log
