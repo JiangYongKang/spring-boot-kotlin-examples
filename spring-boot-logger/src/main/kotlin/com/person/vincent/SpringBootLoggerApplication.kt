@@ -1,4 +1,4 @@
-package cpm.person.vincent
+package com.person.vincent
 
 import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.SpringBootApplication
