@@ -3,6 +3,7 @@ package com.person.vincent
 import com.person.vincent.config.CustomJsonHttpMessageConverter
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.converter.HttpMessageConverter
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 /**
@@ -12,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
  */
 
 @Configuration
-class CustomWebMvcConfigurer : WebMvcConfigurer {
+class WebConfig : WebMvcConfigurer {
 
     /**
      * 添加自定义的转换器到 Spring 容器中
@@ -20,5 +21,12 @@ class CustomWebMvcConfigurer : WebMvcConfigurer {
     override fun configureMessageConverters(converters: MutableList<HttpMessageConverter<*>>) {
         converters.add(CustomJsonHttpMessageConverter())
         super.configureMessageConverters(converters)
+    }
+
+    /**
+     * 设置静态资源的路径
+     */
+    override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
+        registry.addResourceHandler("/resources/**").addResourceLocations("/")
     }
 }

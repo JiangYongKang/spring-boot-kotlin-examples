@@ -1,0 +1,20 @@
+# 默认情况下资源映射到 /**，但可以使用 spring.mvc.static-path-pattern 属性对其进行调整
+# doc: https://docs.spring.io/spring-boot/docs/2.0.0.BUILD-SNAPSHOT/reference/htmlsingle/#boot-features-spring-mvc-static-content
+spring:
+  mvc:
+    static-path-pattern: /**
+
+# spring boot 默认禁用后缀匹配模式。
+# 例如 GET /project/spring-boot.json 这个请求不会被 @GetMapping("/project/spring-boot") 映射。
+# 正确的做法是发送 GET /project/spring-boot?format=json 请求
+# 如果了解注意事项后仍然想继续使用，可以通过 favor-path-extension=true 来设置
+    contentnegotiation:
+      favor-path-extension: false
+
+server:
+  servlet:
+    context-path: /spring-boot-mvc
+
+
+
+
