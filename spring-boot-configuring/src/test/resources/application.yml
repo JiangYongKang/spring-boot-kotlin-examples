@@ -1,7 +1,9 @@
 server:
-  port: 8080
   servlet:
     context-path: /spring-boot-configuring
+  undertow:
+    max-http-post-size: 0
+
 
 spring:
   thymeleaf:
@@ -10,6 +12,9 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
     enabled: true
+
+test:
+  number: 1
 
 random:
   int: ${random.int}

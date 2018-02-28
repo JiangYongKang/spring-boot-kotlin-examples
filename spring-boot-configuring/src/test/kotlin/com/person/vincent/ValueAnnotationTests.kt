@@ -21,6 +21,9 @@ class ValueAnnotationTests {
     @Value("\${server.servlet.context-path}")
     private lateinit var contentPath: String
 
+    @Value("\${server.undertow.max-http-post-size}")
+    private var maxHttpPostSize: Int? = null
+
     @Value("\${random.int}")
     private var number: Int? = null
 
@@ -36,6 +39,7 @@ class ValueAnnotationTests {
     @Test
     fun valueAnnotationTest() {
         Assert.assertNotNull(contentPath)
+        Assert.assertEquals(maxHttpPostSize, 0)
         Assert.assertNotNull(number)
         Assert.assertNotNull(lessNumber)
         Assert.assertNotNull(uuid)
