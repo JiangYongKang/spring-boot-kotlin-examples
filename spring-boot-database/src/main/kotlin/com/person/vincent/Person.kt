@@ -12,11 +12,11 @@ import javax.persistence.*
 @Table(name = "person")
 data class Person(
         @Id @Column(name = "id") @GeneratedValue
-        val id: Long = -1,
+        val id: Long,
 
         @Column(nullable = false, name = "first_name")
-        val firstName: String = "",
+        val firstName: String,
 
         @Column(nullable = false, name = "last_name")
-        val lastName: String = ""
+        val lastName: String
 )
