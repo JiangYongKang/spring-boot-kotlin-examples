@@ -7,3 +7,5 @@ include 'spring-boot-event-listener'
 include 'spring-boot-configuring'
 include 'spring-boot-logger'
 include 'spring-boot-mvc'
+include 'spring-boot-database'
+
