@@ -8,4 +8,7 @@ import org.springframework.data.repository.CrudRepository
  * Comment:
  */
 
-interface PersonRepository : CrudRepository<Person, Long>
+interface PersonRepository : CrudRepository<Person, Long> {
+
+    fun findByFirstName(firstName: String): Person
+}

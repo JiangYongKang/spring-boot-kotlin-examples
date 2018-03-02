@@ -11,12 +11,13 @@ import javax.persistence.*
 @Entity
 @Table(name = "person")
 data class Person(
-        @Id @Column(name = "id") @GeneratedValue
-        val id: Long,
-
         @Column(nullable = false, name = "first_name")
-        val firstName: String,
+        val firstName: String = "",
 
         @Column(nullable = false, name = "last_name")
-        val lastName: String
-)
+        val lastName: String = ""
+) {
+
+        @Id @Column(name = "id") @GeneratedValue
+        var id: Long? = null
+}

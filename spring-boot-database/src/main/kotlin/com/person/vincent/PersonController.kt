@@ -2,7 +2,6 @@ package com.person.vincent
 
 import org.springframework.web.bind.annotation.*
 import java.util.*
-import javax.annotation.Resource
 
 /**
  * Author: vincent
@@ -12,13 +11,12 @@ import javax.annotation.Resource
 
 @RestController
 @RequestMapping("/person")
-class PersonController {
-
-    @Resource
-    private lateinit var repository: PersonRepository
+class PersonController(
+        val repository: PersonRepository
+) {
 
     @GetMapping
-    fun index(): MutableIterable<Person> = repository.findAll()
+    fun index(): MutableIterable<Person>? = repository.findAll()
 
     @GetMapping("/{id}")
     fun edit(@PathVariable id: Long): Optional<Person> = repository.findById(id)
