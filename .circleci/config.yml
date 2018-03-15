@@ -10,9 +10,8 @@ jobs:
       - image: circleci/openjdk:8-jdk
       - image: circleci/mysql:5.7
         environment:
-          MYSQL_ROOT_HOST: 127.0.0.1
+          MYSQL_ROOT_HOST: "%"
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_ALLOW_EMPTY_PASSWORD: true
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
