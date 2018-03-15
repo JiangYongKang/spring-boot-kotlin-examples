@@ -10,8 +10,12 @@ jobs:
       - image: circleci/openjdk:8-jdk
       - image: circleci/mysql:5.7
         environment:
+          MYSQL_HOST: 127.0.0.1
           MYSQL_ROOT_HOST: "%"
+          MYSQL_USER: root
           MYSQL_ROOT_PASSWORD: root
+          DB_DATABASE: test
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -39,8 +43,8 @@ jobs:
           name: install things we need
           command: |
             sudo apt-get update
-            sudo apt-get -y install libzip-dev
-            sudo apt-get -y install zlib1g-dev libicu-dev g++
+            sudo apt-get install -y libzip-dev
+            sudo apt-get install -y zlib1g-dev libicu-dev g++
             sudo apt-get install mysql-client
             sudo apt-get -y install mysql-server
 
