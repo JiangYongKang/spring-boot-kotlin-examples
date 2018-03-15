@@ -8,6 +8,11 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8-jdk
+      - image: circleci/mysql:5.7
+        environment:
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -31,13 +36,39 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: gradle dependencies
+      - run:
+        name: install things we need
+        command: |
+         sudo apt-get update
+         sudo apt-get -y install libzip-dev
+         sudo apt-get -y install zlib1g-dev libicu-dev g++
+         sudo apt-get install mysql-client
+         sudo apt-get -y install mysql-server
+
+      - run:
+        name: satrt database server
+        command: |
+          sudo service mysql start
+          sleep 2
+          ps aux | grep mysql
+
+      - run:
+        name: create non-admin user
+        command: |
+          sudo mysql -u root -e "CREATE USER 'root'@'localhost' IDENTIFIED BY 'root';"
+
+      - run:
+        name: install application dependencies
+        command: |
+          gradle dependencies
 
       - save_cache:
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
-        
-      # run tests!
-      - run: gradle test
+
+      - run:
+        name: run gradle test
+        command: |
+          gradle test
 
