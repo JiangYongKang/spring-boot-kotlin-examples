@@ -12,6 +12,7 @@ jobs:
         environment:
           MYSQL_ROOT_HOST: 127.0.0.1
           MYSQL_ROOT_PASSWORD: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -43,11 +44,6 @@ jobs:
             sudo apt-get -y install zlib1g-dev libicu-dev g++
             sudo apt-get install mysql-client
             sudo apt-get -y install mysql-server
-
-      - run:
-          name: fix MySQL socket config
-          command: |
-            sudo sh -c "echo 'pdo_mysql.default_socket=/var/run/mysqld/mysqld.sock' > /usr/local/etc/php/conf.d/pdo.ini"
 
       - run:
           name: satrt database server
