@@ -40,26 +40,26 @@ jobs:
           - v1-dependencies-
 
       - run:
-        name: install things we need
-        command: sudo apt-get update
-        command: sudo apt-get -y install libzip-dev
-        command: sudo apt-get -y install zlib1g-dev libicu-dev g++
-        command: sudo apt-get install mysql-client
-        command: sudo apt-get -y install mysql-server
+          name: install things we need
+          command: sudo apt-get update
+          command: sudo apt-get -y install libzip-dev
+          command: sudo apt-get -y install zlib1g-dev libicu-dev g++
+          command: sudo apt-get install mysql-client
+          command: sudo apt-get -y install mysql-server
 
       - run:
-        name: satrt database server
-        command: sudo service mysql start
-        command: sleep 2
-        command: ps aux | grep mysql
+          name: satrt database server
+          command: sudo service mysql start
+          command: sleep 2
+          command: ps aux | grep mysql
 
       - run:
-        name: create non-admin user
-        command: sudo mysql -u root -e "CREATE USER 'root'@'localhost' IDENTIFIED BY 'root';"
+          name: create non-admin user
+          command: sudo mysql -u root -e "CREATE USER 'root'@'localhost' IDENTIFIED BY 'root';"
 
       - run:
-        name: install application dependencies
-        command: gradle dependencies
+          name: install application dependencies
+          command: gradle dependencies
 
       - save_cache:
           paths:
@@ -67,7 +67,7 @@ jobs:
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
       - run:
-        name: run gradle test
-        command: gradle test
+          name: run gradle test
+          command: gradle test
 
 
