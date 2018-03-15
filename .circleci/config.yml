@@ -10,9 +10,12 @@ jobs:
       - image: circleci/openjdk:8-jdk
       - image: circleci/mysql:5.7
         environment:
-          MYSQL_HOST: 127.0.0.1
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB__PASSWORD: root
+          DB_USERNAME: root
+          DB_DATABASE: test
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -38,29 +41,25 @@ jobs:
 
       - run:
         name: install things we need
-        command: |
-         sudo apt-get update
-         sudo apt-get -y install libzip-dev
-         sudo apt-get -y install zlib1g-dev libicu-dev g++
-         sudo apt-get install mysql-client
-         sudo apt-get -y install mysql-server
+        command: sudo apt-get update
+        command: sudo apt-get -y install libzip-dev
+        command: sudo apt-get -y install zlib1g-dev libicu-dev g++
+        command: sudo apt-get install mysql-client
+        command: sudo apt-get -y install mysql-server
 
       - run:
         name: satrt database server
-        command: |
-          sudo service mysql start
-          sleep 2
-          ps aux | grep mysql
+        command: sudo service mysql start
+        command: sleep 2
+        command: ps aux | grep mysql
 
       - run:
         name: create non-admin user
-        command: |
-          sudo mysql -u root -e "CREATE USER 'root'@'localhost' IDENTIFIED BY 'root';"
+        command: sudo mysql -u root -e "CREATE USER 'root'@'localhost' IDENTIFIED BY 'root';"
 
       - run:
         name: install application dependencies
-        command: |
-          gradle dependencies
+        command: gradle dependencies
 
       - save_cache:
           paths:
@@ -69,6 +68,6 @@ jobs:
 
       - run:
         name: run gradle test
-        command: |
-          gradle test
+        command: gradle test
+
 
