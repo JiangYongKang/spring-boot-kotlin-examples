@@ -1,5 +1,5 @@
 language: kotlin
-sudo: false
+script: true
 
 jdk:
   - oraclejdk8
