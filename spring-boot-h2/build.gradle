@@ -1,0 +1,4 @@
+dependencies {
+    compile("com.h2database:h2:1.4.196")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+}

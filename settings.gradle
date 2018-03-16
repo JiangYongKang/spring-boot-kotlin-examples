@@ -8,4 +8,5 @@ include 'spring-boot-configuring'
 include 'spring-boot-logger'
 include 'spring-boot-mvc'
 include 'spring-boot-database'
+include 'spring-boot-h2'
 
