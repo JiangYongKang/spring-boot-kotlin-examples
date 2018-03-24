@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: spring-boot-postgresql
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/postgres'
+    username: 'vincent'
+    password:
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    # fix org.postgresql.jdbc.PgConnection.createClob()
+    properties.hibernate.temp.use_jdbc_metadata_defaults: false
+    open-in-view: false
+    database-platform: POSTGRESQL
+

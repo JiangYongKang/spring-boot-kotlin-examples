@@ -9,4 +9,5 @@ include 'spring-boot-logger'
 include 'spring-boot-mvc'
 include 'spring-boot-database'
 include 'spring-boot-h2'
+include 'spring-boot-postgresql'
 
